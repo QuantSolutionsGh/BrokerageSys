@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/header :: header-stuff"/>
+</head>
+<body bgcolor="#E6E6FA">
+<div th:replace="fragments/header :: header"/>
+
+<br/>
+<div class="container">
+
+    <div th:switch="${custForm.id}">
+
+        <div th:case="null"><h5>New Customer</h5></div>
+
+        <div class="row" th:case="*">
+            <div class="col s2">
+                <h5 style="color:indigo">Update</h5>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="card-panel z-depth-2 white">
+
+    <form   action="#" th:action="@{/customers}" th:object="${custForm}" method="post" >
+
+        <input hidden th:field="*{id}" />
+
+        <div class="row">
+            <div class="input-field col s12 m4">
+                <i class="material-icons prefix">account_circle</i>
+                <input  th:field="*{firstName}" th:required="true" id="first_name" type="text" class="validate ">
+                <label for="first_name">First Name</label>
+            </div>
+
+            <div class="input-field col s12 m4">
+                <i class="material-icons prefix hide">account_circle</i>
+
+                <input  th:field="*{lastName}" id="lastname"  th:errorclass="invalid" type="text" class="validate">
+                <label for="lastname">Last Name</label>
+            </div>
+
+            <div class="input-field col s12 m4">
+                <i class="material-icons prefix hide">account_circle</i>
+
+                <input th:field="*{otherNames}"  id="othernames" type="text" class="validate">
+                <label for="othernames">Other Names</label>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+
+
+
+
+            <div class="input-field col s12 m4">
+                <i class="material-icons prefix">phone</i>
+                <input th:field="*{phone}" id="phoneno" type="text" class="validate">
+                <label for="phoneno">Phone Number</label>
+            </div>
+
+            <div class="input-field col s12 m8">
+                <i class="material-icons prefix">email</i>
+                <input th:field="*{email}" id="email" type="text" class="validate">
+                <label for="email">Email Address</label>
+            </div>
+
+
+
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m12">
+                <i class="material-icons prefix">location_on</i>
+                <input id="address" th:field="*{addressLine1}" type="text" class="validate" />
+                <label for="address">Address </label>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m12">
+                <i class="material-icons prefix hide">edit_location</i>
+                <input id="address2" th:field="*{addressLine2}" type="text" class="validate" />
+                <label for="address2">Address Line2 </label>
+
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m12">
+                <i class="material-icons prefix hide">edit_location</i>
+                <input id="address3" th:field="*{addressLine3}" type="text" class="validate" />
+
+                <label for="address2">Address Line3 </label>
+
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col m2 offset-s1 offset-m4">
+                <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit
+                    <i class="material-icons right">save</i>
+                </button>
+            </div>
+            <div class="col m2 s2 ">
+
+                <a class="btn waves-effect waves-light red" th:href="@{/customers/custform/cancel}" >Cancel</a>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </form>
+
+</div>
+    </div>
+</div>
+
+</body>
+</html>

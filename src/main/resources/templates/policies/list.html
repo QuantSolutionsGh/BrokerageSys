@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/header :: header-stuff"/>
+
+    <style>
+        .icon_style{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 20px;
+            color: white;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body bgcolor="#E6E6FA">
+<div th:replace="fragments/header :: header"/>
+
+
+<!--/*@thymesVar id="msg" type="java.lang.String"*/-->
+<div th:if="${msg}">
+    <div class="row" id="alert_box">
+        <div class="col s12 m12">
+            <div class="card green darken-1">
+                <div class="row">
+                    <div class="col s12 m10">
+                        <div class="card-content white-text">
+
+                            <h6 th:text="${msg}"></h6>
+                        </div>
+                    </div>
+                    <div class="col s12 m2">
+                        <i class="fa fa-times icon_style" id="alert_close" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+    <div>
+        <br/>
+        <h5>Policies</h5>
+    </div>
+    <div class="row">
+        <div class="card-panel z-depth-2 white">
+
+
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red">
+            <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+            <li><a class="btn-floating blue" th:href="@{/policies/add}"><i class="material-icons">person_add</i></a></li>
+
+        </ul>
+    </div>
+
+
+
+
+
+    <table class="responsive-table bordered highlight" th:if="${policyList.totalPages >=1}">
+        <thead>
+        <tr>
+            <th>Policy Number</th>
+            <th>Policy Type</th>
+            <th>Cover Start Date</th>
+            <th>Cover End Date</th>
+            <th>Insurer</th>
+            <th>Customer</th>
+            <th>Premium</th>
+            <th>Amount Paid</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pd :${policyList}">
+            <td th:text="${pd.policyNumber}">John</td>
+            <td th:text="${pd.product.name}">John</td>
+            <td th:text="${{pd.coverFmDate}}">John</td>
+            <td th:text="${{pd.coverToDate}}">John</td>
+            <td th:text="${pd.insurer.companyName}">John</td>
+            <td th:text="${pd.customer.firstName + ' '+pd.customer.lastName}"/>
+            <td th:text="${#numbers.formatCurrency(pd.premium)}"/>
+            <td th:text="${#numbers.formatCurrency(pd.amtPaid)}"/>
+
+            <td>
+                <div class="actions">
+
+                    <a th:href="@{/policies/{itemId}/update(itemId=${pd.id})}" > <i class="fa fa-edit fa-2x"></i></a>
+
+                    <a th:href="@{/policies/{itemId}/payments(itemId=${pd.id})}"><i style="color:green" class=" fa fa-paperclip fa-2x"></i></a>
+
+                    <!--<a href="#"><i class="fa fa-remove fa-2x" style="color:red"></i></a>-->
+
+                </div></td>
+
+        </tr>
+
+        </tbody>
+    </table>
+    <!-- we will have paginator here -->
+    <div class="row" th:if="${policyList.totalPages>=1}">
+
+        <div class="input-field col m1 hide-on-small-only">
+            <select id="pageSizeSelect">>
+                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}"
+                        th:value="${pageSize}"
+                        th:selected="${pageSize} == ${selectedPageSize}"></option>
+            </select>
+
+        </div>
+        <br/>
+        <div class="col offset-m3 offset-s2" th:if="${policyList.totalPages>=1}">
+            <ul class="pagination">
+
+                <li th:class="${policyList.number == 0} ? disabled"><a
+                        class="waves-effect"
+                        th:href="@{/policies(pageSize=${selectedPageSize}, page=${policyList.number})}">&larr;</a>
+                </li>
+                <li
+                        th:class="${policyList.number == (page - 1)} ? 'active pointer-disabled'"
+                        th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="waves-effect"
+                       th:href="@{/policies(pageSize=${selectedPageSize}, page=${page})}"
+                       th:text="${page}"></a>
+                </li>
+                <li
+                        th:class="${policyList.number + 1 == policyList.totalPages} ? disabled">
+                    <div th:if="${policyList.number+1 !=policyList.totalPages}">
+                        <a class="waves-effect" th:disabled="${policyList.number + 1 == policyList.totalPages}"
+                           th:href="@{/policies(pageSize=${selectedPageSize}, page=${policyList.number + 2})}">&rarr;</a>
+                    </div>
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </div>
+        </div></div>
+
+
+
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function(){
+
+        /*<![CDATA[*/
+        //  $('.fixed-action-btn').floatingActionButton();
+
+        $('select').material_select();
+
+        changePageAndSize();
+
+        $('#alert_close').click(function(){
+            $( "#alert_box" ).fadeOut( "slow", function() {
+            });
+        });
+    });
+
+    function changePageAndSize() {
+        $('#pageSizeSelect').change(function(evt) {
+            window.location.replace("/myapp/policies?pageSize=" + this.value + "&page=1");
+
+        });
+
+
+    };
+
+
+    function post(path, params, method) {
+        method = method || "post";
+        var paramName = /*[[${_csrf.parameterName}]]*/ 'name';
+        var paramValue = /*[[${_csrf.token}]]*/ 'value';
+
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+        var hiddenField1=document.createElement("input");
+        hiddenField1.setAttribute("type","hidden");
+        hiddenField1.setAttribute("name",paramName);
+        hiddenField1.setAttribute("value",paramValue);
+
+        form.appendChild(hiddenField1);
+
+        for ( var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+    /*]]>*/
+
+</script>
+
+</body>
+</html>

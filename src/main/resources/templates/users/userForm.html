@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/header :: header-stuff"/>
+</head>
+<body bgcolor="#E6E6FA">
+<div th:replace="fragments/header :: header"/>
+
+<br/>
+<div class="container">
+
+    <div th:switch="${userForm.id}">
+
+        <div th:case="null"><h5>New User</h5></div>
+
+        <div class="row" th:case="*">
+            <div class="col s2">
+                <h5 style="color:indigo">Update</h5>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="card-panel z-depth-2 white">
+
+    <form   action="#" th:action="@{/users}" th:object="${userForm}" method="post" >
+
+        <input hidden th:field="*{id}" />
+
+        <input hidden th:field="*{enabled}"/>
+
+        <div class="row">
+            <div class="input-field col s12 m10">
+
+                <input th:readonly="${id}? 'true' : 'false'" th:field="*{username}" th:required="true" id="user" type="text" class="validate ">
+                <label for="user">Username</label>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m10">
+
+                <input  th:field="*{fullname}" th:required="true" id="fullname" type="text" class="validate ">
+                <label for="user">Fullname</label>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m10">
+
+                <input  th:field="*{password}" th:required="true" id="password" type="password" class="validate ">
+                <label for="password">Password</label>
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col m2 offset-s1 offset-m3">
+                <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit
+                    <i class="material-icons right">save</i>
+                </button>
+            </div>
+            <div class="col m2 s2 ">
+
+                <a class="btn waves-effect waves-light red" th:href="@{/users/userform/cancel}" >Cancel</a>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/header :: header-stuff"/>
+</head>
+<body bgcolor="#E6E6FA">
+<div th:replace="fragments/header :: header"/>
+
+<br/>
+<div class="container">
+
+    <div th:switch="${salesAgentForm.id}">
+
+        <div th:case="null"><h5>New Sales Agent</h5></div>
+
+        <div class="row" th:case="*">
+            <div class="col s2">
+                <h5 style="color:indigo">Update</h5>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="card-panel z-depth-2 white">
+
+    <form   action="#" th:action="@{/salesagents}" th:object="${salesAgentForm}" method="post" >
+
+        <input hidden th:field="*{id}" />
+
+        <div class="row">
+            <div class="input-field col s12 m10">
+                <i class="material-icons prefix">account_circle</i>
+                <input  th:field="*{agentName}" th:required="true" id="agent" type="text" class="validate ">
+                <label for="agent">Agent Name</label>
+            </div>
+
+
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col m2 offset-s1 offset-m3">
+                <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit
+                    <i class="material-icons right">save</i>
+                </button>
+            </div>
+            <div class="col m2 s2 ">
+
+                <a class="btn waves-effect waves-light red" th:href="@{/salesagents/salesagentform/cancel}" >Cancel</a>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </form>
+
+</div>
+    </div>
+</div>
+
+</body>
+</html>

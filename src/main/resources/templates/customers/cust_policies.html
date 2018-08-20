@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/header :: header-stuff"/>
+
+    <style>
+        .icon_style{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 20px;
+            color: white;
+            cursor:pointer;
+        }
+    </style>
+</head>
+ <body bgcolor="#E6E6FA">
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+    <br/>
+    <div class="row">
+        <h5 th:text="${'Policies - '+cust.firstName + ' '+cust.otherNames +' '+cust.lastName}" style="color:indigo">Polices</h5>
+    </div>
+    <div class="row">
+        <div class="card-panel z-depth-2 white">
+
+    <table class="responsive-table bordered highlight">
+        <thead>
+        <tr>
+            <th>Policy Number</th>
+            <th>Policy Type</th>
+            <th>Insurer</th>
+            <th>Cvr Start Dt</th>
+            <th>Cvr End Dt</th>
+            <th>Premium</th>
+            <th>Amount Paid</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pd :${cust.policyList}">
+            <td th:text="${pd.policyNumber}">John</td>
+            <td th:text="${pd.product.name}">John</td>
+            <td th:text="${pd.insurer.companyName}">John</td>
+            <td th:text="${pd.coverFmDate}">John</td>
+            <td th:text="${pd.coverToDate}">John</td>
+            <td th:text="${pd.premium}">700</td>
+            <td th:text="${pd.amtPaid}">700</td>
+
+
+
+
+        </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col m2 s2 ">
+
+            <a class="btn waves-effect waves-light red" th:href="@{/customers/custform/cancel}" >BACK</a>
+        </div>
+
+    </div>
+
+
+</div>
+    </div></div>
+</body>
+
+
+</html>

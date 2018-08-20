@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <div th:fragment="header-stuff">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+        <link th:href="@{/webjars/materializecss/0.100.1/css/materialize.min.css}" rel="stylesheet"/>
+
+        <link th:href="@{/webjars/material-design-icons/3.0.1/material-icons.css}" rel="stylesheet"/>
+
+        <link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+
+
+        <script th:src="@{/webjars/jquery/1.9.1/jquery.min.js}"></script>
+
+        <script th:src="@{/webjars/materializecss/0.100.1/js/materialize.min.js}"></script>
+
+
+        <title>Brokererage Management System</title>
+
+
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+
+
+
+
+    <!-- Dropdown Structure -->
+    <ul id="dropdown1" class="dropdown-content">
+        <li><a th:href="@{/customers/}">Customer Listing</a></li>
+        <li><a th:href="@{/customers/add}">Setup New Customer</a></li>
+
+        <li class="divider"></li>
+        <li><a href="#!">three</a></li>
+    </ul>
+    <ul id="dropdown2" class="dropdown-content">
+        <li sec:authorize="hasAnyAuthority('ROLE_DEVELOPER','ROLE_ADMIN')"><a th:href="@{/users/}" th:text="'User Setup'">dummy</a></li>
+        <li><a th:href="@{/users/passwordchange}">Change Password</a></li>
+        <li class="divider"></li>
+        <li><a th:inline="text" th:href="@{/logout}">Sign Out - [[${#httpServletRequest.remoteUser}]]</a></li>
+
+    </ul>
+    <ul id="dropdown20" class="dropdown-content">
+        <li sec:authorize="hasAnyAuthority('ROLE_DEVELOPER','ROLE_ADMIN')"><a th:href="@{/users/}" th:text="'User Setup'">dummy</a></li>
+        <li><a th:href="@{/users/passwordchange}">Change Password</a></li>
+        <li class="divider"></li>
+        <li><a th:inline="text" th:href="@{/logout}">Sign Out - [[${#httpServletRequest.remoteUser}]]</a></li>
+
+    </ul>
+    <ul id="dropdown3"  class="dropdown-content">
+        <li><a th:href="@{/policies/}">Policy Listing</a></li>
+        <li><a th:href="@{/policies/add}">Setup New Policy</a></li>
+        <li class="divider"></li>
+        <li><a href="#!">three</a></li>
+    </ul>
+    <ul id="dropdown4"  class="dropdown-content">
+        <li><a th:href="@{/policies/}">Policy Listing</a></li>
+        <li><a th:href="@{/policies/add}">Setup New Policy</a></li>
+        <li class="divider"></li>
+        <li><a href="#!">three</a></li>
+    </ul>
+    <ul id="dropdown5"  class="dropdown-content">
+        <li><a th:href="@{/policies/}">Policy Listing</a></li>
+        <li><a th:href="@{/policies/add}">Setup New Policy</a></li>
+        <li class="divider"></li>
+        <li><a href="#!">three</a></li>
+    </ul>
+    <nav class="orange">
+        <div class="nav-wrapper">
+            <a href="#" class="navbar-brand navbar-left "><img  style="max-width:150px; margin-top: 10px;" th:src="@{/logo.png}"></a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
+
+            <ul class="right hide-on-med-and-down">
+
+                <!-- Dropdown Trigger -->
+                <li><a th:href="@{/customers}">Customers</a></li>
+                <li><a th:href="@{/policies}">Policies</a></li>
+                <li><a th:href="@{/insurers}">Insurance Companies</a></li>
+                <li><a th:href="@{/salesagents}" th:text="'Sales Agents'">Sales Agents</a></li>
+                <li><a th:href="@{/reports}">Reports</a></li>
+                <li><a class="dropdown-button" data-activates="dropdown2" href="#!">System Configuration<i class="material-icons right">arrow_drop_down</i></a></li>
+
+
+            </ul>
+            <ul class="side-nav  " id="mobile-demo">
+                <li><a th:href="@{/customers}">Customers</a></li>
+                <li><a th:href="@{/policies}">Policies</a></li>
+                <li><a th:href="@{/insurers}">Insurance Companies</a></li>
+                <li><a th:href="@{/salesagents}" th:text="'Sales Agents'">Sales Agents</a></li>
+                <li><a th:href="@{/reports}">Reports</a></li>
+                <li><a class="dropdown-button" data-activates="dropdown20" href="#!">System Configuration<i class="material-icons right">arrow_drop_down</i></a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+
+    <script>
+
+        $('.dropdown-button').dropdown();
+        $('.button-collapse').sideNav();
+
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('.dropdown-button').dropdown();
+            $('.button-collapse').sideNav();
+        });
+    </script>
+
+
+
+
+</div>
+
+</body>
+</html>

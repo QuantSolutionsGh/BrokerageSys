@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/header :: header-stuff"/>
+</head>
+<body bgcolor="#E6E6FA">
+<div th:replace="fragments/header :: header"/>
+
+<br/>
+<div class="container">
+
+    <div th:switch="${policyForm.id}">
+
+        <div th:case="null"><h5>New Policy</h5></div>
+
+        <div class="row" th:case="*">
+            <div class="col s2">
+                <h5 style="color:indigo">Update Policy</h5>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="card-panel z-depth-2 white">
+
+    <form   action="#" th:action="@{/policies}" th:object="${policyForm}" method="post" >
+
+        <input hidden th:field="*{id}" />
+
+        <div class="row">
+            <div class="input-field col s12 m6">
+
+                <input  th:field="*{policyNumber}" th:required="true" id="policyNumer" type="text" class="validate ">
+                <label for="policyNumer">PolicyNumber</label>
+            </div>
+
+            <div class="input-field col s12 m6">
+                <select id="product" th:field="*{product}" th:required="true">
+                    <option th:value="NULL"></option>
+                    <option th:each="product : ${productList}" th:text="${product.name}"
+                            th:value="${{product}}" >
+
+                    </option>
+                </select>
+                <label for="product">Product Type</label>
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m6">
+            <input id="coverFmDate" type="text" th:field="*{coverFmDate}" class="datepicker">
+            <label for="coverFmDate">Cover From Date </label>
+            </div>
+
+            <div class="input-field col s12 m3">
+                <input id="coverToDate" type="text" th:field="*{coverToDate}" class="datepicker">
+                <label for="coverToDate">Cover To Date </label>
+
+            </div>
+            <div class="input-field col s12 m3">
+                <input id="transactionDate" type="text" th:field="*{transactionDate}" class="datepicker">
+                <label for="transactionDate">Transaction Date </label>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <select id="_insurer" th:required="true" th:field="*{insurer}">
+                    <option th:value="NULL"></option>
+                    <option th:each="ins : ${insurerList}" th:text="${ins.companyName}"
+                            th:value="${{ins}}" >
+
+                    </option>
+                </select>
+                <label for="_insurer">Insurer </label>
+
+            </div>
+
+            <div class="input-field col s12 m6">
+                <select id="client" th:field="*{customer}" th:required="true">
+                    <option th:value="NULL"></option>
+                    <option th:each="customer : ${customerList}" th:text="${customer.firstName + ' '+customer.lastName}"
+                            th:value="${{customer}}" >
+
+                    </option>
+                </select>
+                <label for="client">Client </label>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <select id="intermediary" th:field="*{salesAgent}" th:required="true">
+                    <option th:value="NULL"></option>
+                    <option th:each="sm : ${salesAgentList}" th:text="${sm.agentName}"
+                            th:value="${{sm}}" >
+
+                    </option>
+                </select>
+                <label for="intermediary">Intermediary </label>
+
+            </div>
+
+            <div class="input-field col s12 m3">
+                <select id="currency" th:field="*{currency}" th:required="true">
+                    <option th:value="NULL"></option>
+                    <option th:value="GHC" >Ghana Cedis</option>
+                    <option th:value="USD" >USD</option>
+                    <option th:value="EURO" >EURO</option>
+
+
+                </select>
+                <label for="currency">Currency</label>
+
+            </div>
+
+            <div class="input-field col s12 m2">
+                <input id="premium" type="text" th:field="*{premium}" >
+                <label for="premium">Premium </label>
+
+            </div>
+            <div class="input-field col s12 m1">
+                <input id="commission" type="text" th:field="*{commissionRate}" >
+                <label for="commission">Comm. Rate </label>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="row">
+
+
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col m2 offset-s1 offset-m4">
+                <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit
+                    <i class="material-icons right">save</i>
+                </button>
+            </div>
+            <div class="col m2 s2 ">
+
+                <a class="btn waves-effect waves-light red" th:href="@{/policies/policyform/cancel}" >Cancel</a>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </form>
+
+        </div></div></div>
+
+<script th:inline="javascript">
+    $(document).ready(function(){
+
+        /*<![CDATA[*/
+        //  $('.fixed-action-btn').floatingActionButton();
+
+        $('select').material_select();
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year,
+            today: 'Today',
+            clear: 'Clear',
+            format : 'yyyy-mm-dd',
+            close: 'Ok',
+            closeOnSelect: true // Close upon selecting a date,
+
+        });
+
+
+    });
+
+    /*]]>*/
+    </script>
+
+
+</body>
+</html>

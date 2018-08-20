@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <div th:replace="fragments/header :: header-stuff"/>
+</head>
+<body bgcolor="#E6E6FA">
+<div th:replace="fragments/header :: header"/>
+
+<br/>
+<div class="container">
+
+    <!--<div th:switch="${paymentDetailsForm.id}">
+
+        <div th:case="null"><h5>Record Payment</h5></div>
+
+        <div class="row" th:case="*">
+            <div class="col s2">
+                <h5 style="color:indigo">Update</h5>
+            </div>
+        </div>
+
+
+    </div>-->
+
+    <div>
+        <h5 th:if="${paymentDetailsForm.id==null}">Record Payment</h5>
+        <h5 th:if="${paymentDetailsForm.id!=null}">Update</h5>
+
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="card-panel z-depth-2 white">
+
+    <form   action="#" th:action="@{/payments}" th:object="${paymentDetailsForm}" method="post" >
+
+        <input hidden th:field="*{id}" />
+
+        <input hidden th:field="*{policy}" />
+
+        <div class="row">
+            <div class="input-field col s12 m10">
+
+                <input id="transactionDate" type="text" th:field="*{transactionDate}" class="datepicker">
+                <label for="transactionDate">Transaction Date </label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m10">
+
+                <input id="amtPaid" type="text" th:field="*{amtPaid}" >
+                <label for="transactionDate">Amount Paid </label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m10">
+
+                <input id="comments" type="text" th:field="*{comments}" >
+                <label for="comments">Comments</label>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col m2 offset-s1 offset-m3">
+                <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit
+                    <i class="material-icons right">save</i>
+                </button>
+            </div>
+            <div class="col m2 s2 ">
+
+                <a class="btn waves-effect waves-light red" th:href="@{/policies/{id}/payments(id=${paymentDetailsForm.policy.id})}" >Cancel</a>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </form>
+        </div></div>
+
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function(){
+
+        /*<![CDATA[*/
+        //  $('.fixed-action-btn').floatingActionButton();
+
+        $('select').material_select();
+
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year,
+            today: 'Today',
+            clear: 'Clear',
+            format : 'yyyy-mm-dd',
+            close: 'Ok',
+            closeOnSelect: true // Close upon selecting a date,
+
+        });
+
+
+    });
+
+    /*]]>*/
+</script>
+
+</body>
+</html>
